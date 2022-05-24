@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="wide"
+            type="com.example.akharinkhabar.data.model.db.WideItem" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/card_back"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/wideImage"
+                    setImage="@{wide.thumb}"
+                    android:layout_width="match_parent"
+                    android:layout_height="135dp"
+                    android:layout_margin="12dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius="16dp" />
+
+                <TextView
+                    android:id="@+id/titleOfWide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="start"
+                    setTextOfItems="@{wide.title}"
+                    android:textColor="@color/title_card_black"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/wideImage"
+                    app:layout_constraintStart_toStartOf="@id/wideImage"
+                    app:layout_constraintTop_toBottomOf="@id/wideImage"
+                    tools:text="جلال مقدم؛ آرتیستی که زرنگی کردن بلد نبود و تلف شد!" />
+
+
+                <TextView
+                    android:id="@+id/typeWide"
+                    typeOfSimple="@{wide.categoryName}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textColor="@color/category_simple"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="@id/titleOfWide"
+                    app:layout_constraintTop_toBottomOf="@id/titleOfWide"
+                    tools:text="سیاسی" />
+
+
+                <ImageView
+                    android:id="@+id/more"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/svg_more"
+                    app:layout_constraintStart_toStartOf="@id/wideImage"
+                    app:layout_constraintTop_toTopOf="@id/wideImage" />
+
+                <ImageView
+                    android:id="@+id/mark"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/svg_un_mark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/typeWide"
+                    app:layout_constraintTop_toBottomOf="@id/typeWide" />
+
+                <ImageView
+                    android:id="@+id/loves"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/svg_love_like"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/typeWide"
+                    app:layout_goneMarginStart="8dp" />
+
+                <ImageView
+                    android:id="@+id/comments"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/svg_comment"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/loves"
+                    app:layout_constraintTop_toBottomOf="@id/typeWide"
+                    app:layout_goneMarginStart="8dp" />
+
+                <ImageView
+                    android:id="@+id/eyes"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/svg_eye"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/comments"
+                    app:layout_constraintTop_toBottomOf="@id/typeWide" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
