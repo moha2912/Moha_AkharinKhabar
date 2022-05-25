@@ -16,14 +16,14 @@ interface LatestNewsDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSimpleItem(simpleItem: SimpleItem)
+    suspend fun insertSimpleItem(simpleItem: SimpleItem): Long
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWideItem(wideItem: WideItem)
+    suspend fun insertWideItem(wideItem: WideItem) : Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVideoItem(videoItem: VideoItem)
+    suspend fun insertVideoItem(videoItem: VideoItem): Long
 
     @Delete
     suspend fun deleteLatestNewsItem(shoppingItem: LatestNewsItem)
@@ -33,5 +33,8 @@ interface LatestNewsDao {
 
     @Query("SELECT * FROM latestNews_item ORDER BY id")
     suspend fun getAll(): List<RelationMain>
+
+    @Query("SELECT * FROM latestNews_item ORDER BY id")
+    suspend fun getItemWith(): RelationMain
 
 }

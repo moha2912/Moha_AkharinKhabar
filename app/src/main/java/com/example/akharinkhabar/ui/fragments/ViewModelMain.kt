@@ -24,8 +24,7 @@ class ViewModelMain @Inject internal constructor(
 ) : ViewModel() {
     private val responseHandler = ResponseHandler()
 
-    private val _values = MutableLiveData<Event<Resource<LiveData<List<RelationMain>>>>>()
-    val value = mainRepository.getValueFromDbLiveData()
+    val list = mainRepository.getValueFromDbLiveData()
 
 
     var data: Flow<Event<Resource<Boolean>>>? = null

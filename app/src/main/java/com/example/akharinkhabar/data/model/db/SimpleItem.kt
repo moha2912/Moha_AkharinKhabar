@@ -7,8 +7,7 @@ import com.example.akharinkhabar.data.model.Simple
 
 @Entity(tableName = "simple_item")
 data class SimpleItem(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
+    @PrimaryKey
     var serverId: Long,
     var title: String,
     var desc: String,

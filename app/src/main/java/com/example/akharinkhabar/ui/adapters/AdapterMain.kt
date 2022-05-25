@@ -42,14 +42,14 @@ class AdapterMain() :
 
         fun bind() {
             when {
-                models[adapterPosition].simple?.id != 0L && models[adapterPosition].simple?.id != null -> {
+                models[adapterPosition].simple?.serverId != 0L && models[adapterPosition].simple?.serverId != null -> {
                     simpleBinding.simple = models[adapterPosition].simple
                 }
-                models[adapterPosition].video?.id != 0L && models[adapterPosition].video?.id != null -> {
+                models[adapterPosition].video?.serverId != 0L && models[adapterPosition].video?.serverId != null -> {
                     videoBinding.video = models[adapterPosition].video
 
                 }
-                models[adapterPosition].wide?.id != 0L && models[adapterPosition].wide?.id != null -> {
+                models[adapterPosition].wide?.serverId != 0L && models[adapterPosition].wide?.serverId != null -> {
                     wideBinding.wide = models[adapterPosition].wide
                 }
                 else -> {
@@ -65,13 +65,13 @@ class AdapterMain() :
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            models[position].simple?.id != 0L && models[position].simple?.id != null -> {
+            models[position].simple?.serverId != 0L && models[position].simple?.serverId != null -> {
                 typeSimple
             }
-            models[position].video?.id != 0L && models[position].video?.id != null -> {
+            models[position].video?.serverId != 0L && models[position].video?.serverId != null -> {
                 typeVideo
             }
-            models[position].wide?.id != 0L && models[position].wide?.id != null -> {
+            models[position].wide?.serverId != 0L && models[position].wide?.serverId != null -> {
                 typeWide
             }
             else -> {

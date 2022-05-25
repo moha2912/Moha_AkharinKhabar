@@ -7,8 +7,7 @@ import com.example.akharinkhabar.data.model.Simple
 
 @Entity(tableName = "video_item")
 data class VideoItem(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
+    @PrimaryKey
     var serverId: Long,
     var title: String,
     var thumb: String,

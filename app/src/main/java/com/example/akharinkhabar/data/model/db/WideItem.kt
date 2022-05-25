@@ -7,11 +7,9 @@ import com.example.akharinkhabar.data.model.Simple
 
 @Entity(tableName = "wide_item")
 data class WideItem(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
+    @PrimaryKey
     var serverId: Long,
     var title: String,
     var thumb: String,
     var categoryName: String,
-
     )

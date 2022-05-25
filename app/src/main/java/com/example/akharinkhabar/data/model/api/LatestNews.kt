@@ -11,16 +11,8 @@ data class LatestNew(
     val video: Video? = null
 ) {
 
-    fun mapToLatestNewEntity() = LatestNewsItem(
-        id = when {
-            wide != null ->
-                wide.id
-            video != null ->
-                video.id
-            simple != null ->
-                simple.id
-            else -> 0
-        },
+    fun mapToLatestNewEntity(localId: Long?) = LatestNewsItem(
+        id = localId,
         simpleId = simple?.id ?: 0,
         wideId = wide?.id ?: 0,
         videoId = video?.id ?: 0,
@@ -39,7 +31,6 @@ data class Simple(
     val thumb: String
 ) {
     fun mapToSimpleEntity() = SimpleItem(
-        id = id,
         serverId = id,
         title = title,
         thumb = thumb,
@@ -59,7 +50,6 @@ data class Video(
     val categoryName: String? = null
 ) {
     fun mapToWideEntity() = WideItem(
-        id = id,
         serverId = id,
         title = title,
         thumb = thumb,
@@ -67,7 +57,6 @@ data class Video(
     )
 
     fun mapToVideoEntity() = VideoItem(
-        id = id,
         serverId = id,
         title = title,
         thumb = thumb

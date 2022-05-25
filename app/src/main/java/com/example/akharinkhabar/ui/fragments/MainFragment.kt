@@ -11,18 +11,13 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.map
 import com.example.akharinkhabar.R
 import com.example.akharinkhabar.databinding.FragmentMainBinding
-import com.example.akharinkhabar.other.Event
 import com.example.akharinkhabar.other.Status
 import com.example.akharinkhabar.ui.adapters.AdapterMain
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.E
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -42,11 +37,15 @@ class MainFragment : Fragment() {
         viewModel.test()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.value.observe(viewLifecycleOwner) { list ->
-                binding?.mainList?.adapter = AdapterMain().also {
-                    Log.i("TAG", "onViewCreated: $list ")
-                    it.setList(list)
-                }
+            viewModel.list.observe(viewLifecycleOwner) { list ->
+                    if (list.isNotEmpty()) {
+                        binding?.mainList?.adapter = AdapterMain().also {
+                            Log.i("TAG", "onViewCreated: $list ")
+                            it.setList(list)
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "no data", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
@@ -55,6 +54,8 @@ class MainFragment : Fragment() {
                 when (Event.getContentIfNotHandled()?.statusResource) {
                     Status.SUCCESS -> {
                         binding?.titleLoading?.isVisible = false
+                        binding?.mainList?.isVisible = true
+                        binding?.loading?.isVisible = false
                     }
                     Status.ERROR -> {
                         Toast.makeText(
@@ -65,9 +66,13 @@ class MainFragment : Fragment() {
                     }
                     Status.LOADING -> {
                         binding?.titleLoading?.isVisible = true
+                        binding?.mainList?.isVisible = false
+                        binding?.loading?.isVisible = true
                     }
                     Status.OFFLINE -> {
                         binding?.titleLoading?.isVisible = false
+                        binding?.mainList?.isVisible = true
+                        binding?.loading?.isVisible = false
                         Toast.makeText(requireContext(), "Check your net", Toast.LENGTH_SHORT)
                             .show()
                     }

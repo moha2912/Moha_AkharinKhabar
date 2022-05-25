@@ -31,26 +31,29 @@ class RepositoryMain @Inject constructor(
             emit(Event(Resource.loading(null)))
             val allList = apiHelper.getAllNews()
             Log.i("allList", "getPlants: $allList")
-
+            var localId = 0L
             allList.forEach { itemOfModel ->
                 when {
                     itemOfModel.wide != null -> {
-                        appDataBase.latestNewsDao()
+                        localId = appDataBase.latestNewsDao()
                             .insertWideItem(itemOfModel.wide.mapToWideEntity())
                     }
                     itemOfModel.video != null -> {
-                        appDataBase.latestNewsDao()
+                        localId = appDataBase.latestNewsDao()
                             .insertVideoItem(itemOfModel.video.mapToVideoEntity())
                     }
                     itemOfModel.simple != null -> {
-                        appDataBase.latestNewsDao()
+                        localId = appDataBase.latestNewsDao()
                             .insertSimpleItem(itemOfModel.simple.mapToSimpleEntity())
 
                     }
                 }
+
+                appDataBase.latestNewsDao()
+                    .insertLatestNewsItem(itemOfModel.mapToLatestNewEntity(localId))
+
+
             }
-            appDataBase.latestNewsDao()
-                .insertLatestNewsItem(allList.map { it.mapToLatestNewEntity() } as MutableList)
 
             emit(Event(responseHandler.handleSuccess(true)))
 
