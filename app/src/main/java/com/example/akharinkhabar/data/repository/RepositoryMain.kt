@@ -19,13 +19,13 @@ import javax.inject.Inject
  * Created by Moha on 2022-05-21.
  */
 
-class RepositoryMain @Inject constructor(
+open class RepositoryMain @Inject constructor(
     private val appDataBase: AppDataBase,
     private val apiHelper: ApiHelper
-) {
+) : InRepositoryMain{
     private val responseHandler = ResponseHandler()
 
-    suspend fun getAllFromApiAndObserve(): Flow<Event<Resource<Boolean>>> = flow {
+  override suspend fun getAllFromApiAndObserve(): Flow<Event<Resource<Boolean>>> = flow {
         try {
 
             emit(Event(Resource.loading(null)))
@@ -64,7 +64,7 @@ class RepositoryMain @Inject constructor(
 
     }
 
-    fun getValueFromDbLiveData(): LiveData<List<RelationMain>> {
+    override fun getValueFromDbLiveData(): LiveData<List<RelationMain>> {
         return appDataBase.latestNewsDao().observeAllLatestNewsItem()
     }
 

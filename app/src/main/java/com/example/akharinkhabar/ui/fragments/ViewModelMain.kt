@@ -3,6 +3,7 @@ package com.example.akharinkhabar.ui.fragments
 import androidx.lifecycle.*
 import com.example.akharinkhabar.data.model.db.LatestNewsItem
 import com.example.akharinkhabar.data.model.db.RelationMain
+import com.example.akharinkhabar.data.repository.InRepositoryMain
 import com.example.akharinkhabar.data.repository.RepositoryMain
 import com.example.akharinkhabar.other.Event
 import com.example.akharinkhabar.other.Resource
@@ -18,9 +19,8 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class ViewModelMain @Inject internal constructor(
-    private val mainRepository: RepositoryMain,
-    private val savedStateHandle: SavedStateHandle
+class ViewModelMain @Inject constructor(
+    private val mainRepository: InRepositoryMain,
 ) : ViewModel() {
     private val responseHandler = ResponseHandler()
 

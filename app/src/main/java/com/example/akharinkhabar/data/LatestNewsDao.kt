@@ -37,4 +37,7 @@ interface LatestNewsDao {
     @Query("SELECT * FROM latestNews_item ORDER BY id")
     suspend fun getItemWith(): RelationMain
 
+
+    @Query("SELECT * FROM latestNews_item")
+    fun observeAllShoppingItemsTest(): LiveData<List<LatestNewsItem>>
 }

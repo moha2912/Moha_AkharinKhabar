@@ -20,15 +20,15 @@ data class LatestNew(
 }
 
 data class Simple(
-    val id: Long,
-    val title: String,
-    val desc: String,
-    val publishDateFa: String,
-    val categoryName: String,
-    val likeCount: Long,
-    val commentCount: Long,
-    val viewCount: Long,
-    val thumb: String
+    val id: Long= 0L,
+    val title: String = "",
+    val desc: String = "",
+    val publishDateFa: String = "",
+    val categoryName: String = "",
+    val likeCount: Long= 0L,
+    val commentCount: Long= 0L,
+    val viewCount: Long = 0L,
+    val thumb: String = ""
 ) {
     fun mapToSimpleEntity() = SimpleItem(
         serverId = id,
@@ -44,9 +44,9 @@ data class Simple(
 }
 
 data class Video(
-    val id: Long,
-    val title: String,
-    val thumb: String,
+    val id: Long = 0L,
+    val title: String= "",
+    val thumb: String= "",
     val categoryName: String? = null
 ) {
     fun mapToWideEntity() = WideItem(
