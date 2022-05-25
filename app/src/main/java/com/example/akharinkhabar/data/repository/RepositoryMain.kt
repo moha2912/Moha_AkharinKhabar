@@ -1,6 +1,7 @@
 package com.example.akharinkhabar.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.akharinkhabar.data.model.db.LatestNewsItem
 import com.example.akharinkhabar.data.api.ApiHelper
 import com.example.akharinkhabar.data.local.AppDataBase
@@ -24,7 +25,7 @@ class RepositoryMain @Inject constructor(
 ) {
     private val responseHandler = ResponseHandler()
 
-    suspend fun getAllFromApiAndObserve(): Flow<Event<Resource<List<RelationMain>>>> = flow {
+    suspend fun getAllFromApiAndObserve(): Flow<Event<Resource<Boolean>>> = flow {
         try {
 
             emit(Event(Resource.loading(null)))
@@ -50,15 +51,18 @@ class RepositoryMain @Inject constructor(
             }
             appDataBase.latestNewsDao()
                 .insertLatestNewsItem(allList.map { it.mapToLatestNewEntity() } as MutableList)
-            val data = appDataBase.latestNewsDao().getAll()
 
-            emit(Event(responseHandler.handleSuccess(data)))
+            emit(Event(responseHandler.handleSuccess(true)))
 
         } catch (e: Exception) {
-            Log.i("Exception", "getAllFromApiAndObserve : ")
-            emit(Event(responseHandler.handleException<List<RelationMain>>(e)))
+            Log.i("Exception", "getAllFromApiAndObserve : $e")
+            emit(Event(responseHandler.handleException<Boolean>(e)))
         }
 
+    }
+
+    fun getValueFromDbLiveData(): LiveData<List<RelationMain>> {
+        return appDataBase.latestNewsDao().observeAllLatestNewsItem()
     }
 
 }

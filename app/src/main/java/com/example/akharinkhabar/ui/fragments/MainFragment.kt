@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.map
 import com.example.akharinkhabar.R
 import com.example.akharinkhabar.databinding.FragmentMainBinding
 import com.example.akharinkhabar.other.Event
@@ -40,16 +42,19 @@ class MainFragment : Fragment() {
         viewModel.test()
 
         viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.value.observe(viewLifecycleOwner) { list ->
+                binding?.mainList?.adapter = AdapterMain().also {
+                    Log.i("TAG", "onViewCreated: $list ")
+                    it.setList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.data?.collectLatest { Event ->
                 when (Event.getContentIfNotHandled()?.statusResource) {
                     Status.SUCCESS -> {
-                        binding?.mainList?.adapter = AdapterMain().also {
-                            Event.peekContent()?.data?.let { list ->
-                                it.setList(list)
-                            } ?: kotlin.run {
-                                // TODO: no data
-                            }
-                        }
+                        binding?.titleLoading?.isVisible = false
                     }
                     Status.ERROR -> {
                         Toast.makeText(
@@ -59,10 +64,11 @@ class MainFragment : Fragment() {
                         ).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
+                        binding?.titleLoading?.isVisible = true
                     }
                     Status.OFFLINE -> {
-                        Toast.makeText(requireContext(), "check your net", Toast.LENGTH_SHORT)
+                        binding?.titleLoading?.isVisible = false
+                        Toast.makeText(requireContext(), "Check your net", Toast.LENGTH_SHORT)
                             .show()
                     }
 

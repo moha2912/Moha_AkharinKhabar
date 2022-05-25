@@ -28,12 +28,10 @@ interface LatestNewsDao {
     @Delete
     suspend fun deleteLatestNewsItem(shoppingItem: LatestNewsItem)
 
-    @Query("SELECT * FROM latestNews_item")
-    fun observeAllLatestNewsItem(): LiveData<List<LatestNewsItem>>
+    @Query("SELECT * FROM latestNews_item ORDER BY id")
+    fun observeAllLatestNewsItem(): LiveData<List<RelationMain>>
 
     @Query("SELECT * FROM latestNews_item ORDER BY id")
     suspend fun getAll(): List<RelationMain>
 
-    @Query("SELECT * FROM latestNews_item WHERE id = :growZoneNumber ORDER BY id")
-    fun getPlantsWithGrowZoneNumber(growZoneNumber: Int): Flow<List<RelationMain>>
 }
