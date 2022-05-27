@@ -29,7 +29,7 @@ interface LatestNewsDao {
     suspend fun deleteLatestNewsItem(shoppingItem: LatestNewsItem)
 
     @Query("SELECT * FROM latestNews_item ORDER BY id")
-    fun observeAllLatestNewsItem(): LiveData<List<RelationMain>>
+    fun observeAllLatestNewsItem(): Flow<List<RelationMain>>
 
     @Query("SELECT * FROM latestNews_item ORDER BY id")
     suspend fun getAll(): List<RelationMain>

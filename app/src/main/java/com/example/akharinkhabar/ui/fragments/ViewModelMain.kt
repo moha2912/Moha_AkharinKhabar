@@ -20,9 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelMain @Inject constructor(
-    private val mainRepository: InRepositoryMain,
+    private val mainRepository: RepositoryMain,
 ) : ViewModel() {
-    private val responseHandler = ResponseHandler()
 
     val list = mainRepository.getValueFromDbLiveData()
 

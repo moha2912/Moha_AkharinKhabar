@@ -64,7 +64,7 @@ open class RepositoryMain @Inject constructor(
 
     }
 
-    override fun getValueFromDbLiveData(): LiveData<List<RelationMain>> {
+    override fun getValueFromDbLiveData(): Flow<List<RelationMain>> {
         return appDataBase.latestNewsDao().observeAllLatestNewsItem()
     }
 

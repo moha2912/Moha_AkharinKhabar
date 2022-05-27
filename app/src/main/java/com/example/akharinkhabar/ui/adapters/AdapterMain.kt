@@ -3,6 +3,8 @@ package com.example.akharinkhabar.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.akharinkhabar.R
 import com.example.akharinkhabar.data.model.LatestNew
@@ -14,13 +16,25 @@ import com.example.akharinkhabar.databinding.ItemWideBinding
 /**
  * Created by moha on 2022-05-21.
  */
-class AdapterMain() :
-    RecyclerView.Adapter<AdapterMain.ViewHolder>() {
+class AdapterMain :
+    ListAdapter<RelationMain, AdapterMain.ViewHolder>(DiffCallback) {
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<RelationMain>() {
+            override fun areItemsTheSame(oldItem: RelationMain, newItem: RelationMain): Boolean {
+                return oldItem.latestNewsItem.id == newItem.latestNewsItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: RelationMain, newItem: RelationMain): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
     lateinit var wideBinding: ItemWideBinding
     lateinit var simpleBinding: ItemSimpleBinding
     lateinit var videoBinding: ItemVideoBinding
 
-    private var models = mutableListOf<RelationMain>()
 
 
     inner class ViewHolder : RecyclerView.ViewHolder {
@@ -40,20 +54,20 @@ class AdapterMain() :
             videoBinding = b
         }
 
-        fun bind() {
+        fun bind(item: RelationMain) {
             when {
-                models[adapterPosition].simple?.serverId != 0L && models[adapterPosition].simple?.serverId != null -> {
-                    simpleBinding.simple = models[adapterPosition].simple
+                item.simple?.serverId != 0L && item.simple?.serverId != null -> {
+                    simpleBinding.simple = item.simple
                 }
-                models[adapterPosition].video?.serverId != 0L && models[adapterPosition].video?.serverId != null -> {
-                    videoBinding.video = models[adapterPosition].video
+                item.video?.serverId != 0L && item.video?.serverId != null -> {
+                    videoBinding.video = item.video
 
                 }
-                models[adapterPosition].wide?.serverId != 0L && models[adapterPosition].wide?.serverId != null -> {
-                    wideBinding.wide = models[adapterPosition].wide
+                item.wide?.serverId != 0L && item.wide?.serverId != null -> {
+                    wideBinding.wide = item.wide
                 }
                 else -> {
-                    videoBinding.video = models[adapterPosition].video
+                    videoBinding.video = item.video
                 }
             }
         }
@@ -65,13 +79,13 @@ class AdapterMain() :
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            models[position].simple?.serverId != 0L && models[position].simple?.serverId != null -> {
+            getItem(position).simple?.serverId != 0L && getItem(position).simple?.serverId != null -> {
                 typeSimple
             }
-            models[position].video?.serverId != 0L && models[position].video?.serverId != null -> {
+            getItem(position).video?.serverId != 0L && getItem(position).video?.serverId != null -> {
                 typeVideo
             }
-            models[position].wide?.serverId != 0L && models[position].wide?.serverId != null -> {
+            getItem(position).wide?.serverId != 0L && getItem(position).wide?.serverId != null -> {
                 typeWide
             }
             else -> {
@@ -113,16 +127,14 @@ class AdapterMain() :
         }
     }
 
-    fun setList(list: List<RelationMain>) {
-            models.addAll(list)
-            this.notifyDataSetChanged()
-    }
+//    fun setList(list: List<RelationMain>) {
+//        models.addAll(list)
+//        this.notifyDataSetChanged()
+//    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = models.size
 
 
 }

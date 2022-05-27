@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface InRepositoryMain {
 
-    suspend fun getAllFromApiAndObserve() : Flow<Event<Resource<Boolean>>>
+    suspend fun getAllFromApiAndObserve(): Flow<Event<Resource<Boolean>>>
 
-     fun getValueFromDbLiveData() : LiveData<List<RelationMain>>
+    fun getValueFromDbLiveData(): Flow<List<RelationMain>>
 
 }
